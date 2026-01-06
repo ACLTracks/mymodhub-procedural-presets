@@ -1,1 +1,281 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mymodhub.com/schemas/pack-manifest.schema.json",
+  "title": "MyModHub Procedural Presets Pack Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "pack_id",
+    "name",
+    "version",
+    "game",
+    "author",
+    "license",
+    "content"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^1\\.\\d+\\.\\d+$",
+      "description": "Manifest schema version. Example: 1.0.0"
+    },
 
+    "pack_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9_.-]{3,64}$",
+      "description": "Unique stable identifier. Keep lowercase, no spaces."
+    },
+
+    "name": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 80
+    },
+
+    "description": {
+      "type": "string",
+      "maxLength": 800
+    },
+
+    "version": {
+      "type": "string",
+      "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?$",
+      "description": "SemVer. Example: 0.1.0"
+    },
+
+    "game": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "enum": ["skyrimse", "skyrimae", "skyrimvr"],
+          "description": "Target game build family."
+        },
+        "min_runtime": {
+          "type": "string",
+          "description": "Optional. Example: 1.6.640"
+        },
+        "max_runtime": {
+          "type": "string",
+          "description": "Optional."
+        }
+      }
+    },
+
+    "author": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1, "maxLength": 80 },
+        "handle": { "type": "string", "maxLength": 80 },
+        "url": { "type": "string", "format": "uri" },
+        "contact": { "type": "string", "maxLength": 120 }
+      }
+    },
+
+    "license": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["spdx"],
+      "properties": {
+        "spdx": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 40,
+          "description": "SPDX identifier like MIT, CC-BY-4.0, CC-BY-NC-4.0, AllRightsReserved"
+        },
+        "text": {
+          "type": "string",
+          "maxLength": 2000,
+          "description": "Optional short license notes."
+        }
+      }
+    },
+
+    "tags": {
+      "type": "array",
+      "maxItems": 24,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9_-]{2,24}$"
+      },
+      "uniqueItems": true
+    },
+
+    "requirements": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "hard": {
+          "type": "array",
+          "maxItems": 64,
+          "items": { "$ref": "#/$defs/dependency" },
+          "uniqueItems": true
+        },
+        "soft": {
+          "type": "array",
+          "maxItems": 64,
+          "items": { "$ref": "#/$defs/dependency" },
+          "uniqueItems": true
+        },
+        "incompatible": {
+          "type": "array",
+          "maxItems": 64,
+          "items": { "$ref": "#/$defs/dependency" },
+          "uniqueItems": true
+        }
+      }
+    },
+
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "notes": { "type": "string", "maxLength": 1000 },
+        "head_parts_policy": {
+          "type": "string",
+          "enum": ["user_controls", "pack_suggests", "pack_enforces"],
+          "default": "user_controls",
+          "description": "Default stance. v1 should almost always be user_controls."
+        }
+      }
+    },
+
+    "content": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "entries"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["racemenu_morphs"],
+          "description": "v1 supports RaceMenu morph templates."
+        },
+        "entries": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 512,
+          "items": { "$ref": "#/$defs/contentEntry" }
+        }
+      }
+    },
+
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "generated_at": { "type": "string", "format": "date-time" },
+        "generator": { "type": "string", "maxLength": 120 },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[A-Fa-f0-9]{64}$",
+          "description": "Optional manifest hash for tamper detection."
+        }
+      }
+    }
+  },
+
+  "$defs": {
+    "dependency": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 120,
+          "description": "Human readable mod id. Example: RaceMenu, SKSE, HighPolyHead"
+        },
+        "min_version": { "type": "string", "maxLength": 40 },
+        "max_version": { "type": "string", "maxLength": 40 },
+        "url": { "type": "string", "format": "uri" },
+        "notes": { "type": "string", "maxLength": 300 }
+      }
+    },
+
+    "contentEntry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "file"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9_.-]{3,80}$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 80
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 500
+        },
+        "file": {
+          "type": "string",
+          "pattern": "^[^\\\\]+\\.json$",
+          "description": "Relative path to the entry data file. v1: json only."
+        },
+        "gender": {
+          "type": "string",
+          "enum": ["female", "male", "any"],
+          "default": "any"
+        },
+        "race_hints": {
+          "type": "array",
+          "maxItems": 32,
+          "items": { "type": "string", "maxLength": 40 }
+        },
+        "style_tags": {
+          "type": "array",
+          "maxItems": 32,
+          "items": { "type": "string", "pattern": "^[a-z0-9_-]{2,24}$" },
+          "uniqueItems": true
+        },
+        "apply": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "mode": {
+              "type": "string",
+              "enum": ["additive", "clamped_additive", "absolute"],
+              "default": "clamped_additive",
+              "description": "How slider values are applied."
+            },
+            "strength": {
+              "type": "number",
+              "minimum": 0.0,
+              "maximum": 2.0,
+              "default": 1.0,
+              "description": "Global multiplier for morph deltas."
+            },
+            "skip_missing_sliders": {
+              "type": "boolean",
+              "default": true
+            }
+          }
+        },
+        "preview": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "image": { "type": "string", "maxLength": 240 },
+            "video": { "type": "string", "maxLength": 240 }
+          }
+        },
+        "attribution": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "notes": { "type": "string", "maxLength": 800 }
+          }
+        }
+      }
+    }
+  }
+}
