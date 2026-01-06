@@ -1,0 +1,74 @@
+{
+  "schema_version": "1.0.0",
+
+  "pack": {
+    "id": "acltracks.starter_faces",
+    "name": "Starter Faces Pack",
+    "description": "Procedural RaceMenu face templates focused on clean structure, balance, and realism.",
+    "version": "0.1.0",
+    "category": "racemenu_morphs",
+    "visibility": "public",
+    "tags": ["procedural", "faces", "racemenu", "female", "realistic"],
+    "author": {
+      "name": "Ashes Creative Labs",
+      "handle": "ACLTracks",
+      "url": "https://mymodhub.com"
+    },
+    "links": {
+      "homepage": "https://mymodhub.com",
+      "source": "https://github.com/ACLTracks/mymodhub-procedural-presets"
+    }
+  },
+
+  "requirements": [
+    {
+      "id": "racemenu",
+      "name": "RaceMenu",
+      "version_min": "0.4.19",
+      "optional": false
+    },
+    {
+      "id": "skse",
+      "name": "SKSE",
+      "optional": false
+    },
+    {
+      "id": "high_poly_head",
+      "name": "High Poly Head",
+      "optional": true,
+      "notes": "Optional. User selects head parts manually. Pack does not enforce."
+    }
+  ],
+
+  "compatibility": {
+    "game": "skyrim_ae",
+    "racemenu_min": "0.4.19",
+    "high_poly_head_supported": true
+  },
+
+  "assets": {
+    "icon": "assets/icon.webp",
+    "banner": "assets/banner.webp"
+  },
+
+  "entries": [
+    {
+      "id": "soft_nord_glow",
+      "name": "Soft Nord Glow",
+      "type": "racemenu_morph_entry",
+      "path": "entries/soft_nord_glow.json",
+      "description": "Balanced feminine face with gentle cheek volume, softer jawline, and calm proportions.",
+      "tags": ["soft", "feminine", "natural", "nord"],
+      "assets": {
+        "preview": "previews/soft_nord_glow.webp"
+      },
+      "sort": 10
+    }
+  ],
+
+  "meta": {
+    "generated_by": "mymodhub-packager",
+    "generated_at": "2026-01-06T00:00:00Z",
+    "notes": "Example index file. Entries are additive morph templates only."
+  }
+}
