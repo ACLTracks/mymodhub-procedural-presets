@@ -71,4 +71,16 @@
     "generated_at": "2026-01-06T00:00:00Z",
     "notes": "Example index file. Entries are additive morph templates only."
   }
+  {
+  "id": "sharp_nord_edge",
+  "name": "Sharp Nord Edge",
+  "type": "racemenu_morph_entry",
+  "path": "entries/sharp_nord_edge.json",
+  "description": "Sharper, more angular facial structure with a stronger jaw and narrower cheek profile.",
+  "tags": ["sharp", "angular", "nord", "assertive"],
+  "assets": {
+    "preview": "previews/sharp_nord_edge.webp"
+  },
+  "sort": 20
+ }
 }
