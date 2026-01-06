@@ -1,0 +1,242 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mymodhub.com/schemas/pack-index.schema.json",
+  "title": "MyModHub Pack Index",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "pack", "entries"],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^1\\.\\d+\\.\\d+$"
+    },
+
+    "pack": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9_.-]{3,80}$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 80
+        },
+        "description": {
+          "type": "string",
+          "maxLength": 1200
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?$",
+          "description": "SemVer"
+        },
+        "category": {
+          "type": "string",
+          "enum": [
+            "racemenu_morphs",
+            "bodyslide_presets",
+            "camera_presets",
+            "behavior_presets",
+            "combat_profiles",
+            "environment_profiles",
+            "misc"
+          ],
+          "default": "racemenu_morphs"
+        },
+        "visibility": {
+          "type": "string",
+          "enum": ["public", "unlisted", "private"],
+          "default": "public"
+        },
+        "tags": {
+          "type": "array",
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 24,
+            "pattern": "^[a-z0-9_-]+$"
+          }
+        },
+        "author": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "name": { "type": "string", "maxLength": 80 },
+            "handle": {
+              "type": "string",
+              "maxLength": 50,
+              "pattern": "^[A-Za-z0-9_.-]+$"
+            },
+            "url": { "type": "string", "format": "uri", "maxLength": 300 }
+          }
+        },
+        "links": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "homepage": { "type": "string", "format": "uri", "maxLength": 300 },
+            "support": { "type": "string", "format": "uri", "maxLength": 300 },
+            "source": { "type": "string", "format": "uri", "maxLength": 300 }
+          }
+        }
+      }
+    },
+
+    "requirements": {
+      "type": "array",
+      "maxItems": 64,
+      "items": { "$ref": "#/$defs/requirement" },
+      "description": "Optional high-level mod requirements for the whole pack."
+    },
+
+    "compatibility": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "game": {
+          "type": "string",
+          "enum": ["skyrim_se", "skyrim_ae", "skyrim_vr", "skyrim_le"],
+          "default": "skyrim_se"
+        },
+        "racemenu_min": {
+          "type": "string",
+          "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?$"
+        },
+        "high_poly_head_supported": { "type": "boolean", "default": true }
+      }
+    },
+
+    "assets": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "icon": {
+          "type": "string",
+          "maxLength": 200,
+          "pattern": "^[^\\\\:*?\"<>|]+\\.(png|jpg|jpeg|webp)$"
+        },
+        "banner": {
+          "type": "string",
+          "maxLength": 200,
+          "pattern": "^[^\\\\:*?\"<>|]+\\.(png|jpg|jpeg|webp)$"
+        }
+      }
+    },
+
+    "entries": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 2048,
+      "items": { "$ref": "#/$defs/entry" }
+    },
+
+    "meta": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "generated_by": { "type": "string", "maxLength": 120 },
+        "generated_at": { "type": "string", "format": "date-time" },
+        "notes": { "type": "string", "maxLength": 2000 }
+      }
+    }
+  },
+
+  "$defs": {
+    "requirement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9_.-]{3,80}$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 120
+        },
+        "version_min": {
+          "type": "string",
+          "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?$"
+        },
+        "optional": { "type": "boolean", "default": false },
+        "notes": { "type": "string", "maxLength": 400 }
+      }
+    },
+
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "path", "type"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9_.-]{3,80}$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 80
+        },
+        "type": {
+          "type": "string",
+          "enum": ["racemenu_morph_entry"],
+          "default": "racemenu_morph_entry"
+        },
+        "path": {
+          "type": "string",
+          "minLength": 5,
+          "maxLength": 220,
+          "pattern": "^(entries|presets|content)/[A-Za-z0-9_./-]+\\.json$",
+          "description": "Relative to pack root."
+        },
+        "description": { "type": "string", "maxLength": 600 },
+
+        "tags": {
+          "type": "array",
+          "maxItems": 32,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 24,
+            "pattern": "^[a-z0-9_-]+$"
+          }
+        },
+
+        "requirements": {
+          "type": "array",
+          "maxItems": 32,
+          "items": { "$ref": "#/$defs/requirement" },
+          "description": "Optional entry-specific requirements (overrides or adds to pack requirements)."
+        },
+
+        "assets": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "preview": {
+              "type": "string",
+              "maxLength": 200,
+              "pattern": "^[^\\\\:*?\"<>|]+\\.(png|jpg|jpeg|webp)$"
+            }
+          }
+        },
+
+        "sort": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 999999,
+          "default": 0
+        }
+      }
+    }
+  }
+}
