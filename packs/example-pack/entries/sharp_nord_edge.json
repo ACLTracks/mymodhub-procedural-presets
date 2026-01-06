@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0.0",
+  "format": "mymodhub.racemenu.morphs.v1",
+  "id": "sharp_nord_edge",
+  "name": "Sharp Nord Edge",
+  "description": "Sharper facial structure with stronger jaw definition, narrower cheeks, and a more assertive profile. Morphs only.",
+  "units": "normalized",
+  "defaults": {
+    "apply_mode": "clamped_additive",
+    "strength": 1.0,
+    "clamp_min": -1.0,
+    "clamp_max": 1.0,
+    "skip_missing_sliders": true
+  },
+  "targets": [
+    {
+      "type": "cheeks",
+      "sliders": [
+        { "key": "Cheekbone Height", "value": 0.10 },
+        { "key": "Cheekbone Width", "value": -0.18 },
+        { "key": "Cheek Depth", "value": -0.08 }
+      ]
+    },
+    {
+      "type": "jaw",
+      "sliders": [
+        { "key": "Jaw Width", "value": 0.12 },
+        { "key": "Jaw Height", "value": 0.10 },
+        { "key": "Jaw Forward", "value": 0.08 }
+      ]
+    },
+    {
+      "type": "chin",
+      "sliders": [
+        { "key": "Chin Length", "value": 0.08 },
+        { "key": "Chin Width", "value": 0.06 },
+        { "key": "Chin Forward", "value": 0.06 }
+      ]
+    },
+    {
+      "type": "nose",
+      "sliders": [
+        { "key": "Nose Length", "value": 0.06 },
+        { "key": "Nose Height", "value": 0.02 },
+        { "key": "Nose Width", "value": -0.10 }
+      ]
+    },
+    {
+      "type": "eyes",
+      "sliders": [
+        { "key": "Eye Height", "value": -0.04 },
+        { "key": "Eye Width", "value": -0.06 },
+        { "key": "Eye Depth", "value": 0.04 }
+      ]
+    }
+  ],
+  "meta": {
+    "created_at": "2026-01-06T00:00:00Z",
+    "source": "mymodhub generator",
+    "author_notes": "Stronger structural profile. Still avoids headparts and extreme values."
+  }
+}
