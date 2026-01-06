@@ -1,1 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://mymodhub.com/schemas/racemenu-morph-entry.schema.json",
+  "title": "MyModHub RaceMenu Morph Entry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "id", "name", "targets"],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "pattern": "^1\\.\\d+\\.\\d+$"
+    },
 
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9_.-]{3,80}$"
+    },
+
+    "name": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 80
+    },
+
+    "description": {
+      "type": "string",
+      "maxLength": 800
+    },
+
+    "format": {
+      "type": "string",
+      "const": "mymodhub.racemenu.morphs.v1",
+      "default": "mymodhub.racemenu.morphs.v1"
+    },
+
+    "units": {
+      "type": "string",
+      "enum": ["normalized", "racemenu_native"],
+      "default": "normalized",
+      "description": "normalized is recommended: values in [-1..1] or [0..1] depending on range."
+    },
+
+    "defaults": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "apply_mode": {
+          "type": "string",
+          "enum": ["additive", "clamped_additive", "absolute"],
+          "default": "clamped_additive"
+        },
+        "strength": {
+          "type": "number",
+          "minimum": 0.0,
+          "maximum": 2.0,
+          "default": 1.0
+        },
+        "clamp_min": {
+          "type": "number",
+          "default": -1.0
+        },
+        "clamp_max": {
+          "type": "number",
+          "default": 1.0
+        },
+        "skip_missing_sliders": {
+          "type": "boolean",
+          "default": true
+        }
+      }
+    },
+
+    "targets": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 16,
+      "items": { "$ref": "#/$defs/targetBlock" }
+    },
+
+    "meta": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "author_notes": { "type": "string", "maxLength": 1200 },
+        "created_at": { "type": "string", "format": "date-time" },
+        "source": {
+          "type": "string",
+          "maxLength": 200,
+          "description": "Optional: where this template came from (site generator, hand-authored, etc)."
+        }
+      }
+    }
+  },
+
+  "$defs": {
+    "targetBlock": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "sliders"],
+      "properties": {
+        "type": {
+          "type": "string",
+          "enum": ["face", "head", "brows", "nose", "eyes", "mouth", "jaw", "cheeks", "chin", "misc"],
+          "description": "Logical grouping only. Helps UI and debugging."
+        },
+
+        "apply": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "mode": {
+              "type": "string",
+              "enum": ["additive", "clamped_additive", "absolute"]
+            },
+            "strength": { "type": "number", "minimum": 0.0, "maximum": 2.0 },
+            "clamp_min": { "type": "number" },
+            "clamp_max": { "type": "number" },
+            "skip_missing_sliders": { "type": "boolean" }
+          }
+        },
+
+        "sliders": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 512,
+          "items": { "$ref": "#/$defs/sliderOp" }
+        }
+      }
+    },
+
+    "sliderOp": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key", "value"],
+      "properties": {
+        "key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "description": "Stable slider key. For v1 you can use the RaceMenu slider name string."
+        },
+        "value": {
+          "type": "number",
+          "minimum": -2.0,
+          "maximum": 2.0,
+          "description": "If units=normalized, recommend [-1..1]."
+        },
+        "min": {
+          "type": "number",
+          "description": "Optional per-slider clamp override."
+        },
+        "max": {
+          "type": "number",
+          "description": "Optional per-slider clamp override."
+        },
+        "note": {
+          "type": "string",
+          "maxLength": 160
+        }
+      }
+    }
+  }
+}
