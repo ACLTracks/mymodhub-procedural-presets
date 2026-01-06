@@ -1,1 +1,61 @@
-
+{
+  "schema_version": "1.0.0",
+  "pack_id": "acltracks.starter_faces",
+  "name": "Starter Faces Pack",
+  "description": "Example procedural face templates. Safe, deterministic, and additive.",
+  "version": "0.1.0",
+  "game": {
+    "id": "skyrimae",
+    "min_runtime": "1.6.640"
+  },
+  "author": {
+    "name": "Ashes Creative Labs",
+    "handle": "ACLTracks",
+    "url": "https://mymodhub.com"
+  },
+  "license": {
+    "spdx": "MIT",
+    "text": "Code and schemas under MIT. Template content may be authored under separate terms per pack."
+  },
+  "tags": ["procedural", "racemenu", "presets", "faces"],
+  "requirements": {
+    "hard": [
+      { "id": "SKSE" },
+      { "id": "RaceMenu" }
+    ],
+    "soft": [
+      { "id": "HighPolyHead", "notes": "Optional. User chooses head parts. Pack does not enforce." }
+    ],
+    "incompatible": []
+  },
+  "compatibility": {
+    "head_parts_policy": "user_controls",
+    "notes": "Does not change hair, eyes, brows, or head parts. Morph data only."
+  },
+  "content": {
+    "type": "racemenu_morphs",
+    "entries": [
+      {
+        "id": "soft_nord_glow",
+        "name": "Soft Nord Glow",
+        "description": "Balanced feminine face, subtle cheek volume, calmer jaw, clean profile.",
+        "file": "entries/soft_nord_glow.json",
+        "gender": "female",
+        "race_hints": ["Nord", "Breton"],
+        "style_tags": ["soft", "feminine", "natural"],
+        "apply": {
+          "mode": "clamped_additive",
+          "strength": 1.0,
+          "skip_missing_sliders": true
+        },
+        "preview": {
+          "image": "previews/soft_nord_glow.webp"
+        }
+      }
+    ]
+  },
+  "integrity": {
+    "generated_at": "2026-01-06T00:00:00Z",
+    "generator": "mymodhub-packager 0.1.0"
+  }
+}
