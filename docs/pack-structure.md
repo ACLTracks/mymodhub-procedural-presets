@@ -198,3 +198,20 @@ be iterated on
 
 The goal is not perfection.
 The goal is leverage.
+
+Next Steps
+
+If you want to build a pack:
+Copy the example pack
+Change metadata
+Add entries
+Validate against schemas
+Test in-game
+If you want to build tools:
+target index.json for UI
+target entries/*.json for generation
+never write directly to manifest.json unless intentional
+
+This document defines the contract.
+
+Follow it, and everything works.
