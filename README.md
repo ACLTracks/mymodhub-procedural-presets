@@ -1,113 +1,130 @@
-# mymodhub-procedural-presets
-Procedural modding framework for Skyrim. Defines a data-driven system for generating, loading, and sharing RaceMenu preset templates without overwriting user choices or breaking load orders.
+mymodhub-procedural-presets
 
-MyModHub Procedural Presets
-Procedural modding framework for Skyrim.
+Procedural Modding Framework for Skyrim
 
-This project defines a data-driven system for generating, loading, and sharing RaceMenu preset templates without overwriting user choices or breaking load orders.
+Overview
+
+MyModHub Procedural Presets defines a data-driven framework for generating, loading, and sharing RaceMenu preset templates without overwriting user choices or breaking load orders.
+
 This is not a collection of finished presets.
 This is the system that produces them.
 
-What This Is
-
-MyModHub Procedural Presets is an engine-first approach to Skyrim modding.
-Instead of shipping static, one-off mods, this framework introduces procedural preset packs that:
-are authored as structured data
-install like normal mods
-apply deterministically and safely
-can be remixed, shared, and iterated on
-
-The goal is to modernize how character presets are created and distributed while remaining fully offline, stable, and compatible with existing mod setups.
-
-What This Is Not
-
-This project does not:
-run AI inside Skyrim
-modify skeletons, animations, or physics
-overwrite head parts, hair, eyes, or brows
-depend on accounts, servers, or runtime services
-attempt to replace RaceMenu or sculpting
-
-All generation happens before runtime.
+All generation happens offline.
 Skyrim only consumes validated data.
 
-Core Concepts
-Procedural Modding
+Philosophy
 
-Procedural modding replaces static assets with systems that generate game-ready content from intent, templates, and rules.
+Procedural modding replaces static assets with systems.
 
 The mod is not the output.
 The mod is the engine that produces the output.
 
+The goal is leverage, not automation.
+Structure, not randomness.
+Control, not fragility.
+
+What This Enables
+
+Procedural preset packs that:
+
+Are authored as structured data
+
+Install like normal mods
+
+Apply deterministically
+
+Can be shared, remixed, and versioned safely
+
+Never override user-controlled assets
+
+What This Is Not
+
+This framework does not:
+
+Run AI inside Skyrim
+
+Modify skeletons, animations, or physics
+
+Overwrite head parts, hair, eyes, or brows
+
+Require accounts, servers, or online services
+
+Replace RaceMenu sculpting
+
+Core Concepts
+Procedural Modding
+
+Systems generate game-ready output from intent, templates, and rules.
+
 Template Packs
 
-A template pack is a data-only mod that contains:
+A template pack is a data-only mod containing:
 
-metadata and attribution
+Metadata and attribution
 
-compatibility and requirement flags
-one or more morph templates
-safe, additive slider deltas
+Compatibility and requirement flags
+
+One or more morph templates
+
+Safe, additive slider deltas
 
 Template packs are:
 
-deterministic
-versioned
-installable via MO2 or Vortex
-shareable without breaking other setups
-User Ownership
-Head parts, meshes, textures, skeletons, and visual mods always remain under user control.
+Deterministic
 
-This framework only touches explicitly defined morph data and skips anything that does not exist or should not be modified.
+Versioned
+
+Installable via MO2 or Vortex
+
+Safe to distribute independently
+
+User Ownership
+
+All visual assets remain under user control.
+
+This framework only applies explicitly defined morph data and skips anything unsupported or missing.
 
 Initial Scope
 
-Version 0.1.x focuses exclusively on:
-RaceMenu facial morph templates
-additive, non-destructive application
-offline data loading
-clear logging and validation
+Version 0.1.x focuses on:
 
-Future systems may expand into cameras, behaviors, environments, and other procedural domains, but this repository starts with characters.
+RaceMenu facial morph templates
+
+Additive, non-destructive application
+
+Offline data loading
+
+Clear validation and logging
+
+Future procedural domains may include cameras, environments, and behaviors, but this repository starts with characters.
 
 Repository Structure
 mymodhub-procedural-presets/
-├─ skse-plugin/        # SKSE engine source
-├─ papyrus/            # Papyrus scripts if required
-├─ schemas/            # JSON schema definitions
+├─ schemas/        JSON schema definitions
 ├─ configs/
-│  └─ examples/        # Example template packs
-├─ docs/               # Specifications and design notes
-└─ tools/              # Validators and pack utilities
+│  └─ examples/    Example template packs
+├─ docs/           Specifications and design notes
+├─ tools/          Validators and utilities
+└─ skse-plugin/    Runtime implementation reference
 
 Status
 
 Early development.
 
-The repository currently defines:
+Currently defined:
 
-the procedural philosophy
-the pack format contract
-example data structures
-Runtime implementation will follow once the data layer is locked.
+Procedural philosophy
+
+Pack format contract
+
+Schema structure
+
+Example data layouts
+
+Runtime implementation follows once the data layer is locked.
 
 License
-This project is licensed under the MIT License.
 
-Template packs and user-generated content may be distributed under their own licenses as defined by their authors.
+MIT License for framework code.
 
-Philosophy
-
-Mods should not trap creativity inside finished assets.
-They should provide systems that let creativity scale.
-Procedural modding is about leverage, not automation.
-Structure, not randomness.
-Control, not fragility.
-
-Links
-
-Patreon: (https://www.patreon.com/c/Asherz)
-
-Platform: MyModHub.com
-
-Concept: Procedural Modding for Skyrim
+Template packs and user-generated content may use their own licenses as defined by their authors.
